@@ -8,3 +8,7 @@ React-router sera utilisé pour gérer les 3 routes:
 - /not-found
 
 Estimation : 2h pour la logique et entre 1 et 2h pour le design, en essayant de prendre en main la librairie styled-components.
+
+Timeline :
+- creation du composant searchBar : 10min
+- 

@@ -3,4 +3,4 @@
 // au debut taper le pseudo, faire ok => chakraUI ou CSS (styled-components)
 // affichage de cards "voici mes repos " avec un bouton "voir plus" et que ca amene sur d'autres infos
 // pagination en afficher que 5 par 5 avec l'url qui change a chaque changement de pages (pagination serveur)
-// a tout moment on doit pouvoir changer le pseudo dans l'imput, ca doit pas break, seule la partie basse est liée au routeur
+// a tout moment on doit pouvoir changer le pseudo dans l'input, ca doit pas break, seule la partie basse est liée au routeur
