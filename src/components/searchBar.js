@@ -1,39 +1,24 @@
 import React from "react";
 import { useState } from "react";
+import { getUserData } from "./api";
+import RepoDetails from "./repoDetails";
 import UserRepos from "./userRepos";
+import { useNavigate } from "react-router-dom";
 
 export default function SearchBar() {
   const [username, setUsername] = useState("");
   const [userData, setUserData] = useState([]);
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     setUsername(event.target.value);
-    // fetchApi();
+    // getUserData();
   };
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
-      fetchApi();
+      //   getUserData(username, setUserData);
+      navigate(`/${username}`);
     }
-  };
-
-  const fetchApi = () => {
-    fetch(`https://api.github.com/users/${username}/repos`)
-      // fetch(`https://api.github.com/users/llccrr`)
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        throw new Error("Something went wrong");
-      })
-
-      .then((data) => {
-        if (data.length > 0) {
-          setUserData(data);
-        }
-      })
-      .catch((error) => {
-        console.log("no result");
-      });
   };
 
   return (
@@ -44,15 +29,9 @@ export default function SearchBar() {
         onChange={handleChange}
         placeholder={"Search a Github User"}
       ></input>
-      <button onClick={fetchApi}>OK</button>
-      {/* <ul>
-        {userRepos.map((element) => (
-          <li>{element.name}</li>
-        ))}
-      </ul> */}
-      {/* {console.log(userData)}
-      {console.log(username)} */}
-      <UserRepos userData={userData} username={username} />
+      <button onClick={() => navigate(`/${username}`)}>OK</button>
+      {/* <UserRepos userData={userData} username={username} /> */}
+      {/*<RepoDetails userData={userData}/> */}
     </div>
   );
 }

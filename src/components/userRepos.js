@@ -1,23 +1,27 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData, useParams } from "react-router-dom";
+import { getUserData } from "./api";
 
-export default function UserRepos(userData, username, setUsername) {
-  console.log(userData.username);
-  console.log(userData.userData);
+export default function UserRepos() {
+  const repositionaries = useLoaderData();
+  console.log(repositionaries)
+
+  let { username } = useParams();
+  console.log(username)
 
   function displaySearchMessage() {
-    if (userData.username.length === 0) {
+    if (repositionaries.length === 0) {
       return;
-    } else if (userData.username.length > 0) {
+    } else if (username.length > 0) {
       return (
         <div>
-          <div>{`Press Enter to check if ${userData.username} has public Repos.`}</div>
+          <div>{`Press Enter to check if ${username} has public Repos.`}</div>
         </div>
       );
     } else {
       return (
         <div>
-          <div>{`User ${userData.username} has public Repos.`}</div>
+          <div>{`User ${repositionaries} has public Repos.`}</div>
         </div>
       );
     }
@@ -26,11 +30,12 @@ export default function UserRepos(userData, username, setUsername) {
   return (
     <div>
       <div>{displaySearchMessage()}</div>
+      {/* display list of repos */}
       <div>
         <ul>
-          {userData.userData.map((element) => (
-            <li key={element.name}>
-              <Link to={`/repositories/${element.name}`}>{element.name}</Link>
+          {repositionaries.map((repository) => (
+            <li key={repository.name}>
+              <Link to={`/${username}/${repository.name}`}>{repository.name}</Link>
             </li>
           ))}
         </ul>
