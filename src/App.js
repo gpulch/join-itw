@@ -1,6 +1,5 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
-import SearchBar, { loader as searchbar } from "./components/searchBar";
+import React from "react";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -20,9 +19,9 @@ const router = createBrowserRouter(
         element={<UserRepos />}
         loader={({ params }) => getUserData(params.username)}
       />
-      <Route path="/:username/:repo" 
-      element={<RepoDetails />}
-      // loader={({ params }) => getUserData(params.username) }
+      <Route 
+      path="/:username/:repo" 
+      element={<RepoDetails />} 
       />
     </Route>
   )
@@ -32,9 +31,6 @@ function App() {
   return (
     <React.StrictMode>
       <RouterProvider router={router} />
-      {/* <SearchBar />
-      <UserRepos />
-      <RepoDetails /> */}
     </React.StrictMode>
   );
 }

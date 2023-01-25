@@ -1,27 +1,74 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import { Link, useLoaderData, useParams } from "react-router-dom";
 import { getUserData } from "./api";
+import styled from "styled-components";
+import Pagination from "react-js-pagination";
+
+const Tiles = styled.ul`
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-gap: 10px;
+  list-style-type: none;
+  a {
+    text-decoration: none;
+  }
+
+`;
+
+const Tile = styled.div`
+  width: 25vw;
+  height: 10vh;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
+  background-color: #f2f2f2;
+`;
+
+const PaginationContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  a {
+    text-decoration: none;
+  }
+  li {
+   display: inline-block;
+   width: 30px;
+    }
+`;
 
 export default function UserRepos() {
-  const repositionaries = useLoaderData();
-  console.log(repositionaries)
+  const repositories = useLoaderData();
+  const [activePage, setActivePage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentRepos = repositories.slice(startIndex, endIndex);
+
+  console.log(repositories);
 
   let { username } = useParams();
-  console.log(username)
+  console.log(username);
+
+  function handlePageChange(pageNumber) {
+    console.log(`active page is ${pageNumber}`);
+    setActivePage(pageNumber);
+    setCurrentPage(pageNumber);
+  }
 
   function displaySearchMessage() {
-    if (repositionaries.length === 0) {
+    if (username.length === 0) {
       return;
-    } else if (username.length > 0) {
-      return (
-        <div>
-          <div>{`Press Enter to check if ${username} has public Repos.`}</div>
-        </div>
-      );
     } else {
       return (
         <div>
-          <div>{`User ${repositionaries} has public Repos.`}</div>
+          <div>{`User ${username} has ${repositories.length} public Repos :`}</div>
         </div>
       );
     }
@@ -32,13 +79,29 @@ export default function UserRepos() {
       <div>{displaySearchMessage()}</div>
       {/* display list of repos */}
       <div>
-        <ul>
-          {repositionaries.map((repository) => (
-            <li key={repository.name}>
-              <Link to={`/${username}/${repository.name}`}>{repository.name}</Link>
-            </li>
+        <Tiles>
+          {currentRepos.map((repository) => (
+            <Tile>
+              <li key={repository.name}>
+                <Link to={`/${username}/${repository.name}`}>
+                  {repository.name}
+                </Link>
+              </li>
+            </Tile>
           ))}
-        </ul>
+        </Tiles>
+        <div>
+          <PaginationContainer>
+            <Pagination
+              activePage={activePage}
+              itemsCountPerPage={itemsPerPage}
+              totalItemsCount={repositories.length}
+              pageRangeDisplayed={5}
+              onChange={handlePageChange}
+              itemClass="li"
+            />
+          </PaginationContainer>
+        </div>
       </div>
     </div>
   );

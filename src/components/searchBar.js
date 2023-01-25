@@ -4,6 +4,24 @@ import { getUserData } from "./api";
 import RepoDetails from "./repoDetails";
 import UserRepos from "./userRepos";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+
+const SearchInput = styled.input`
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  padding: 10px;
+  width: 300px;
+`;
+
+const Button = styled.button`
+border: 1px solid #ccc;
+border-radius: 4px;
+font-size: 16px;
+padding: 10px;
+width: 50px;
+`;
+
 
 export default function SearchBar() {
   const [username, setUsername] = useState("");
@@ -22,14 +40,13 @@ export default function SearchBar() {
   };
 
   return (
-    <div className="searchBar">
-      <input
-        value={username}
+    <div>
+        <SearchInput value={username}
         onKeyDown={handleKeyPress}
         onChange={handleChange}
-        placeholder={"Search a Github User"}
-      ></input>
-      <button onClick={() => navigate(`/${username}`)}>OK</button>
+        placeholder={"Search a Github User"}></SearchInput>
+     
+      <Button onClick={() => navigate(`/${username}`)}>OK</Button>
       {/* <UserRepos userData={userData} username={username} /> */}
       {/*<RepoDetails userData={userData}/> */}
     </div>

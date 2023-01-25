@@ -3,6 +3,7 @@ import SearchBar from "../components/searchBar";
 import UserRepos from "../components/userRepos";
 import RepoDetails from "../components/repoDetails";
 import NotFound from "../components/notFound";
+import styled from "styled-components";
 
 // export const router = createBrowserRouter([
 //   {
@@ -31,16 +32,32 @@ import NotFound from "../components/notFound";
 //   },
 // ]);
 
+const Container = styled.section`
+  font-size: 1.5em;
+  text-align: center;
+  color: palevioletred;
+  
+`;
+
+const TopSection = styled.section`
+  background-color: #282c34;
+  padding: 15px 0 30px 0;
+`;
+
 function RootLayout() {
   return (
     <>
-      GitStalker
-      <SearchBar />
-      <main>
-        <Outlet />
-      </main>
+      <Container>
+        <TopSection>
+          GitStalker
+          <SearchBar />
+        </TopSection>
+        <main>
+          <Outlet />
+        </main>
+      </Container>
     </>
   );
 }
 
-export default RootLayout
+export default RootLayout;
