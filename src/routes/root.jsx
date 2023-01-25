@@ -1,6 +1,9 @@
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import SearchBar from "../components/searchBar";
-import userRepos from "../components/userRepos";
+import UserRepos from "../components/userRepos";
+import UserRepoInfo from "../components/repoDetails";
+import RepoDetails from "../components/repoDetails";
+import NotFound from "../components/notFound";
 
 export const router = createBrowserRouter([
   {
@@ -8,18 +11,22 @@ export const router = createBrowserRouter([
     element: (
       <div>
         Home
-        <SearchBar />
+        <SearchBar  />
         <Outlet />
       </div>
     ),
     children: [
       {
         path: "/repositories",
-        element: <userRepos />,
+        element: <UserRepos />,
+      },
+      {
+        path: "/repositories/:repodetails",
+        element: <RepoDetails />,
       },
       {
         path: "/*",
-        element: <>not found</>,
+        element: <NotFound />,
       },
     ],
   },
