@@ -63,27 +63,20 @@ export default function UserRepos() {
   const currentRepos = repositories.slice(startIndex, endIndex);
 
   let { username } = useParams();
-  //   console.log(username);
-    console.log(currentRepos);
+  console.log(currentRepos);
 
   function handlePageChange(pageNumber) {
     setActivePage(pageNumber);
     setCurrentPage(pageNumber);
   }
-
   function displaySearchMessage() {
     if (username.length === 0) {
       return;
     } else if (repositories.length === 0) {
-        return <div>Oh Oh... looks like this user has no public repositories</div>;
-    }
-    // else if (repositories.length === 0) {
-    //     // return navigate(`/error`);
-    //   return <div>Oh Oh... looks like this user has no public repositories</div>;
-    // } else if (currentRepos === "403") {
-    //   return <div>Oh Oh... looks like you made too many request</div>;
-    // } 
-    else if (username.length > 0) {
+      return (
+        <div>Oh Oh... looks like this user has no public repositories</div>
+      );
+    } else if (username.length > 0) {
       return (
         <div>
           <div>{`User ${username} has ${repositories.length} public Repos :`}</div>
@@ -116,7 +109,6 @@ export default function UserRepos() {
   return (
     <div>
       <div>{displaySearchMessage()}</div>
-      {/* display list of repos */}
       <div>
         {displayRepos()}
         <div>

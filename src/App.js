@@ -38,8 +38,6 @@ const router = createBrowserRouter(
               : "Not Found"
           }
           errorElement={<NotFound />}
-
-          // loader={repoDetailsLoader}
         />
         <Route path="/error" element={<NotFound />} />
       </Route>

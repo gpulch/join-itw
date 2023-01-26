@@ -26,11 +26,9 @@ export default function SearchBar() {
 
   const handleChange = (event) => {
     setUsername(event.target.value);
-    // getUserData();
   };
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
-      //   getUserData(username, setUserData);
       navigate(`/${username}`);
     }
   };
