@@ -3,19 +3,15 @@ export function getUserData(username) {
     fetch(`https://api.github.com/users/${username}/repos`)
       // fetch(`https://api.github.com/users/llccrr`)
 
-    //   .then((res) => {
-    //     if (res.ok) return res.json();
-    //     else throw new Error("Status code error :" + res.status);
-    //   })
-
-    .then((res)=> {
+      .then((res) => {
         if (res.status === 404) {
-            return "error"
+          return "404";
+        } else if (res.status === 403) {
+          return "403";
         } else {
-            return res.json()
+          return res.json();
         }
-    })
-
+      })
       .then((data) => {
         if (data.length > 0) {
           console.log(username);

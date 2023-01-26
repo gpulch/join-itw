@@ -43,6 +43,7 @@ const PaginationContainer = styled.div`
 `;
 
 export default function UserRepos() {
+  const navigate = useNavigate();
   const repositories = useLoaderData();
   const [activePage, setActivePage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
@@ -65,7 +66,9 @@ export default function UserRepos() {
   function displaySearchMessage() {
     if (username.length === 0) {
       return;
-    } else {
+    } else if (currentRepos === "404") {
+      return <div>No public repository for this user : 404</div>;
+    } else if (username.length > 0 && repositories.length === 0) {
       return (
         <div>
           <div>{`User ${username} has ${repositories.length} public Repos :`}</div>
@@ -73,13 +76,19 @@ export default function UserRepos() {
       );
     }
   }
-console.log(currentRepos)
-  return (
-    <div>
-      <div>{displaySearchMessage()}</div>
-      {/* display list of repos */}
-      <div>
-        {currentRepos === "error" ? ( <div>error</div>) : 
+
+  function displayRepos() {
+    if (currentRepos === "404") {
+      return <div>No public repository for this user : 404</div>;
+    } else if (currentRepos === "403") {
+      return (
+        <div>
+          Looks like you made too many requests, you should wait an hour and try
+          again (403)
+        </div>
+      );
+    } else {
+      return (
         <Tiles>
           {currentRepos.map((repository) => (
             <Tile>
@@ -91,7 +100,17 @@ console.log(currentRepos)
             </Tile>
           ))}
         </Tiles>
-}
+      );
+    }
+  }
+
+  console.log(currentRepos);
+  return (
+    <div>
+      <div>{displaySearchMessage()}</div>
+      {/* display list of repos */}
+      <div>
+        {displayRepos()}
         <div>
           <PaginationContainer>
             <Pagination
@@ -110,5 +129,5 @@ console.log(currentRepos)
 }
 
 export function loader() {
-    return getUserData();
-    }
+  return getUserData();
+}
