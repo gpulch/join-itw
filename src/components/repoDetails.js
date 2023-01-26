@@ -1,6 +1,17 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useLoaderData } from "react-router-dom";
+import styled from "styled-components";
+
+const DetailsList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  li {
+    font-size: 2vw;
+    
+  }
+`;
 
 export default function RepoDetails(userData) {
   const repositories = useLoaderData();
@@ -17,7 +28,7 @@ export default function RepoDetails(userData) {
     <div>
       <div>{username}'s Repo Details :</div>
       <div>
-        <ul>
+        <DetailsList>
           <li>Repo Name: {filteredRepo[0].name}</li>
           <li>Repo Description : {filteredRepo[0].description}</li>
           <li>Repo id : {filteredRepo[0].id} </li>
@@ -27,7 +38,7 @@ export default function RepoDetails(userData) {
           <li>Repo Stars : {filteredRepo[0].stargazers_count}</li>
           <li>Repo Watchers : {filteredRepo[0].watchers_count}</li>
           <li>Repo Forks : {filteredRepo[0].forks_count}</li>
-        </ul>
+        </DetailsList>
       </div>
     </div>
   );
