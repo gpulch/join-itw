@@ -8,10 +8,12 @@ import {
 } from "react-router-dom";
 import RootLayout from "./routes/root";
 import UserRepos from "./components/userRepos";
-import RepoDetails from "./components/repoDetails";
+import RepoDetails, {
+  loader as repoDetailsLoader,
+} from "./components/repoDetails";
 import { getUserData } from "./components/api";
 import NotFound from "./components/notFound";
-import Error403 from "./components/error403";
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,11 +32,17 @@ const router = createBrowserRouter(
         <Route
           path="/:username/:repo"
           element={<RepoDetails />}
+          loader={({ params }) =>
+            getUserData(params.username)
+              ? getUserData(params.username)
+              : "Not Found"
+          }
           errorElement={<NotFound />}
+
+          // loader={repoDetailsLoader}
         />
-         <Route path="/error" element={<NotFound />} />
+        <Route path="/error" element={<NotFound />} />
       </Route>
-    
     </Route>
   )
 );

@@ -13,6 +13,21 @@ export function getUserData(username) {
       })
   );
 }
+// export function getRepoData(username, repo) {
+//   return (
+//     // fetch(`https:test`)
+//     fetch(`https://api.github.com/users/${username}/${repo}`)
+//       // fetch(`https://api.github.com/users/llccrr`)
+
+//       .then((res) => res.json())
+//       .then((data) => data)
+//       .catch((error) => {
+//         console.log("Error caught fetching api");
+//         console.log(error);
+//         return "error";
+//       })
+//   );
+// }
 
       // .then((res) => {
       //   if (res.status === 404) {
