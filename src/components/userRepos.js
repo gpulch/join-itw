@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Link, useLoaderData, useParams } from "react-router-dom";
-import { getUserData } from "./api";
 import styled from "styled-components";
 import Pagination from "react-js-pagination";
 import { useNavigate } from "react-router-dom";
@@ -13,9 +12,14 @@ const Tiles = styled.ul`
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, 1fr);
   grid-gap: 10px;
+  padding: 0;
   list-style-type: none;
+
   a {
     text-decoration: none;
+  }
+  li {
+    font-size: 2vw;
   }
 `;
 
@@ -35,16 +39,22 @@ const PaginationContainer = styled.div`
   justify-content: center;
   a {
     text-decoration: none;
+    text-align: center;
+    justify-content: center;
+    color: #000;
   }
   li {
     display: inline-block;
     width: 30px;
+
+    margin: px;
   }
 `;
 
 export default function UserRepos() {
   const navigate = useNavigate();
   const repositories = useLoaderData();
+
   const [activePage, setActivePage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
@@ -52,13 +62,11 @@ export default function UserRepos() {
   const endIndex = startIndex + itemsPerPage;
   const currentRepos = repositories.slice(startIndex, endIndex);
 
-  console.log(repositories);
-
   let { username } = useParams();
-  console.log(username);
+  //   console.log(username);
+    console.log(currentRepos);
 
   function handlePageChange(pageNumber) {
-    console.log(`active page is ${pageNumber}`);
     setActivePage(pageNumber);
     setCurrentPage(pageNumber);
   }
@@ -66,9 +74,16 @@ export default function UserRepos() {
   function displaySearchMessage() {
     if (username.length === 0) {
       return;
-    } else if (currentRepos === "404") {
-      return <div>No public repository for this user : 404</div>;
-    } else if (username.length > 0 && repositories.length === 0) {
+    } else if (repositories.length === 0) {
+        return <div>Oh Oh... looks like this user has no public repositories</div>;
+    }
+    // else if (repositories.length === 0) {
+    //     // return navigate(`/error`);
+    //   return <div>Oh Oh... looks like this user has no public repositories</div>;
+    // } else if (currentRepos === "403") {
+    //   return <div>Oh Oh... looks like you made too many request</div>;
+    // } 
+    else if (username.length > 0) {
       return (
         <div>
           <div>{`User ${username} has ${repositories.length} public Repos :`}</div>
@@ -78,15 +93,8 @@ export default function UserRepos() {
   }
 
   function displayRepos() {
-    if (currentRepos === "404") {
-      return <div>No public repository for this user : 404</div>;
-    } else if (currentRepos === "403") {
-      return (
-        <div>
-          Looks like you made too many requests, you should wait an hour and try
-          again (403)
-        </div>
-      );
+    if (currentRepos === "error" || currentRepos.length === 0) {
+      navigate(`/error`);
     } else {
       return (
         <Tiles>
@@ -126,8 +134,4 @@ export default function UserRepos() {
       </div>
     </div>
   );
-}
-
-export function loader() {
-  return getUserData();
 }

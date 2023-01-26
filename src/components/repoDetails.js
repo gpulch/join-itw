@@ -6,6 +6,7 @@ export default function RepoDetails(userData) {
   let { repo } = useParams();
   console.log(userData)
   console.log(repo)
+  console.log(useParams())
   return (
 
     <div>

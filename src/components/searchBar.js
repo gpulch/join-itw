@@ -1,8 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import { getUserData } from "./api";
-import RepoDetails from "./repoDetails";
-import UserRepos from "./userRepos";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -22,7 +19,6 @@ padding: 10px;
 width: 50px;
 `;
 
-
 export default function SearchBar() {
   const [username, setUsername] = useState("");
   const [userData, setUserData] = useState([]);
@@ -38,12 +34,7 @@ export default function SearchBar() {
       navigate(`/${username}`);
     }
   };
- function UserRepos() {
-    const navigate = useNavigate();
-    // ...
-    getUserData(username, navigate)
-    // ...
-  }
+
   return (
     <div>
         <SearchInput value={username}
