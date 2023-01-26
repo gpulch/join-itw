@@ -2,12 +2,20 @@ export function getUserData(username) {
   return (
     fetch(`https://api.github.com/users/${username}/repos`)
       // fetch(`https://api.github.com/users/llccrr`)
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
+
+    //   .then((res) => {
+    //     if (res.ok) return res.json();
+    //     else throw new Error("Status code error :" + res.status);
+    //   })
+
+    .then((res)=> {
+        if (res.status === 404) {
+            return "error"
+        } else {
+            return res.json()
         }
-        throw new Error("Something went wrong");
-      })
+    })
+
       .then((data) => {
         if (data.length > 0) {
           console.log(username);
@@ -16,7 +24,8 @@ export function getUserData(username) {
         }
       })
       .catch((error) => {
-        console.log("no result");
+        console.log("Api : no result");
+        console.log(error);
       })
   );
 }

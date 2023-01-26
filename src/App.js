@@ -10,6 +10,7 @@ import RootLayout from "./routes/root";
 import UserRepos from "./components/userRepos";
 import RepoDetails from "./components/repoDetails";
 import { getUserData } from "./components/api";
+import NotFound from "./components/notFound";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -17,12 +18,19 @@ const router = createBrowserRouter(
       <Route
         path="/:username"
         element={<UserRepos />}
-        loader={({ params }) => getUserData(params.username)}
+        loader={({ params }) =>
+          getUserData(params.username)
+            ? getUserData(params.username)
+            : "Not Found"
+        }
       />
-      <Route 
-      path="/:username/:repo" 
-      element={<RepoDetails />} 
+      <Route
+        path="/:username/:repo"
+        element={<RepoDetails />}
+        errorElement={<NotFound />}
       />
+
+      <Route path="*" element={<NotFound />} />
     </Route>
   )
 );

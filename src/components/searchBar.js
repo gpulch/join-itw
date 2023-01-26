@@ -38,7 +38,12 @@ export default function SearchBar() {
       navigate(`/${username}`);
     }
   };
-
+ function UserRepos() {
+    const navigate = useNavigate();
+    // ...
+    getUserData(username, navigate)
+    // ...
+  }
   return (
     <div>
         <SearchInput value={username}
@@ -47,8 +52,6 @@ export default function SearchBar() {
         placeholder={"Search a Github User"}></SearchInput>
      
       <Button onClick={() => navigate(`/${username}`)}>OK</Button>
-      {/* <UserRepos userData={userData} username={username} /> */}
-      {/*<RepoDetails userData={userData}/> */}
     </div>
   );
 }

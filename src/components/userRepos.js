@@ -4,6 +4,7 @@ import { Link, useLoaderData, useParams } from "react-router-dom";
 import { getUserData } from "./api";
 import styled from "styled-components";
 import Pagination from "react-js-pagination";
+import { useNavigate } from "react-router-dom";
 
 const Tiles = styled.ul`
   display: grid;
@@ -16,7 +17,6 @@ const Tiles = styled.ul`
   a {
     text-decoration: none;
   }
-
 `;
 
 const Tile = styled.div`
@@ -37,9 +37,9 @@ const PaginationContainer = styled.div`
     text-decoration: none;
   }
   li {
-   display: inline-block;
-   width: 30px;
-    }
+    display: inline-block;
+    width: 30px;
+  }
 `;
 
 export default function UserRepos() {
@@ -73,12 +73,13 @@ export default function UserRepos() {
       );
     }
   }
-
+console.log(currentRepos)
   return (
     <div>
       <div>{displaySearchMessage()}</div>
       {/* display list of repos */}
       <div>
+        {currentRepos === "error" ? ( <div>error</div>) : 
         <Tiles>
           {currentRepos.map((repository) => (
             <Tile>
@@ -90,6 +91,7 @@ export default function UserRepos() {
             </Tile>
           ))}
         </Tiles>
+}
         <div>
           <PaginationContainer>
             <Pagination
@@ -106,3 +108,7 @@ export default function UserRepos() {
     </div>
   );
 }
+
+export function loader() {
+    return getUserData();
+    }
